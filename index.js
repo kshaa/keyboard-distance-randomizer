@@ -36,25 +36,40 @@ function isLetter(letter) {
     return letter.length === 1 && letter.match(/[a-z]/i);
 }
 
+function isNormalInteger(str) {
+    return /^\+?\d+$/.test(str);
+}
+
 // drunkednessPercentage = [0.00;1.00]
-function typoSymbol(drunkednessPercentage, symbol) {
+function typoSymbol(drunkednessPercentage, digitsInTypos, symbol) {
     if (isLetter(symbol) && Math.round(Math.random() + (drunkednessPercentage - 0.5)) >= 1) {
-        return randomElementFromArray(keyNeighbours[symbol]);
+        var availableTypos = keyNeighbours[symbol];
+        
+        if (!digitsInTypos) {
+            for (var availableTypoKey in availableTypos) {
+                if (isNormalInteger(availableTypos[availableTypoKey])) {
+                    availableTypos.splice(availableTypoKey, 1);
+                }
+            }    
+        }
+
+        return randomElementFromArray(availableTypos);
     }
     
     return symbol;
 }
 
-function typoText(drunkednessPercentage, text) {
-    return text.split("").map(typoSymbol.bind(null, drunkednessPercentage)).join("");
+function typoText(drunkednessPercentage, digitsInTypos, text) {
+    return text.split("").map(typoSymbol.bind(null, drunkednessPercentage, digitsInTypos)).join("");
 }
 
 function render() {
     var input = document.getElementById("inputText");
     var output = document.getElementById("outputText");
     var drunkednessPercentage = parseInt(document.getElementById("drunkednessPercentage").value) / 100;
+    var digitsInTypos = document.getElementById("digitsInTypos").checked;
 
-    output.textContent = typoText(drunkednessPercentage, input.value.toLowerCase());
+    output.textContent = typoText(drunkednessPercentage, digitsInTypos, input.value.toLowerCase());
 }
 
 document.addEventListener("DOMContentLoaded", function(){
