@@ -43,27 +43,19 @@ function isNormalInteger(str) {
 }
 
 // drunkednessPercentage = [0.00;1.00]
-function typoSymbol(drunkednessPercentage, digitsInTypos, symbol) {
-    if (isLetter(symbol) && Math.round(Math.random() + (drunkednessPercentage - 0.5)) >= 1) {
-        var availableTypos = keyNeighbours[symbol]
-
-        if (digitsInTypos !== true) {
-            for (var availableTypoKey in availableTypos) {
-                if (isNormalInteger(availableTypos[availableTypoKey])) {
-                    availableTypos.splice(availableTypoKey, 1)
-                }
-            }
-        }
-
-        return randomElementFromArray(availableTypos)
-    }
-
-    return symbol
+function remap(digitsInTypos, symbol) {
+    return randomElementFromArray(
+        keyNeighbours[symbol].filter(s =>
+            digitsInTypos || !s.match(/[0-9]/)))
 }
 
-function typoText(drunkednessPercentage, digitsInTypos, text) {
+function typoText(drunkPercent, digitsInTypos, text) {
     return text.split("").map(function(symbol) {
-        return typoSymbol(drunkednessPercentage, digitsInTypos, symbol)
+        if (symbol.match(/[a-z]/i) && Math.random() < drunkPercent) {
+            return remap(digitsInTypos, symbol)
+        } else {
+            return symbol
+        }
     }).join("")
 }
 
