@@ -1,3 +1,5 @@
+// vim: ts=4 sw=4
+
 var keyNeighbours = {
     "q": ["1", "2", "w", "s", "a", ],
     "w": ["1", "2", "3", "e", "d", "s", "a", "q", ],
@@ -31,37 +33,20 @@ function randomElementFromArray(xs) {
     return xs[Math.floor(Math.random() * xs.length)]
 }
 
-function isLetter(letter) {
-    // Probably doesn't work for cyrillic and latvian
-    return letter.length === 1 && letter.match(/[a-z]/i)
-}
-
-function isNormalInteger(str) {
-    return /^\+?\d+$/.test(str)
-}
-
 // drunkednessPercentage = [0.00;1.00]
-function typoSymbol(drunkednessPercentage, digitsInTypos, symbol) {
-    if (isLetter(symbol) && Math.round(Math.random() + (drunkednessPercentage - 0.5)) >= 1) {
-        var availableTypos = keyNeighbours[symbol]
-
-        if (digitsInTypos !== true) {
-            for (var availableTypoKey in availableTypos) {
-                if (isNormalInteger(availableTypos[availableTypoKey])) {
-                    availableTypos.splice(availableTypoKey, 1)
-                }
-            }
-        }
-
-        return randomElementFromArray(availableTypos)
-    }
-
-    return symbol
+function remap(digitsInTypos, symbol) {
+    return randomElementFromArray(
+        keyNeighbours[symbol].filter(s =>
+            digitsInTypos || !s.match(/[0-9]/)))
 }
 
-function typoText(drunkednessPercentage, digitsInTypos, text) {
+function typoText(drunkPercent, digitsInTypos, text) {
     return text.split("").map(function(symbol) {
-        return typoSymbol(drunkednessPercentage, digitsInTypos, symbol)
+        if (symbol.match(/[a-z]/i) && Math.random() < drunkPercent) {
+            return remap(digitsInTypos, symbol)
+        } else {
+            return symbol
+        }
     }).join("")
 }
 
@@ -74,30 +59,27 @@ function render() {
     output.textContent = typoText(drunkednessPercentage, digitsInTypos, input.value.toLowerCase())
 }
 
-document.addEventListener("DOMContentLoaded", function(){
-    var inputs = document.getElementsByTagName("input")
-    for (node of inputs) {
-        node.addEventListener('change', function() {
-            render()
-        })
-    }
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('input, textarea, button').forEach(function (node) {
+        node.addEventListener('change', render)
+        node.addEventListener('keyup', render)
+    })
 
-    var textareas = document.getElementsByTagName("textarea")
-    for (node of textareas) {
-        node.addEventListener('input', function() {
-            render()
-        })
-    }
+    document.querySelectorAll('input[type=range]').forEach(function (node) {
+        var state = 'up'
 
-    var buttons = document.getElementsByTagName("button")
-    for (node of buttons) {
-        node.addEventListener('click', function() {
-            render()
+        node.addEventListener('mousedown', function () { state = 'down' })
+        node.addEventListener('mouseup', function () { state = 'up' })
+        node.addEventListener('mousemove', function () {
+            if (state == 'down') {
+                render()
+            }
         })
-    }
+    })
 })
 
-function setDrunkednessPercentage(percentage) {
-    document.getElementById("drunkednessPercentage").value = percentage
-    render()
+const setSlider = value => {
+    const slider = document.getElementById("drunkednessPercentage")
+    slider.value = value
+    slider.dispatchEvent(new Event('change'))
 }
