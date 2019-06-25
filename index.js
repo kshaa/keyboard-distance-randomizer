@@ -60,6 +60,6 @@ function render() {
 document.addEventListener("DOMContentLoaded", function(){
     var button = document.getElementById("go");
     button.addEventListener('click', function() {
-        render;
+        render();
     });
 });    
