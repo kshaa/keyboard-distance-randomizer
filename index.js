@@ -4,32 +4,32 @@ const $qs = document.querySelector.bind(document)
 const $qsAll = document.querySelectorAll.bind(document)
 
 var keyNeighbours = {
-    "q": ["1", "2", "w", "s", "a", ],
-    "w": ["1", "2", "3", "e", "d", "s", "a", "q", ],
-    "e": ["2", "3", "4", "r", "f", "d", "s", "w", ],
-    "r": ["3", "4", "5", "t", "g", "f", "d", "e", ],
-    "t": ["4", "5", "6", "y", "h", "g", "f", "r", ],
-    "y": ["5", "6", "7", "u", "j", "h", "g", "t", ],
-    "u": ["6", "7", "8", "i", "k", "j", "h", "y", ],
-    "i": ["7", "8", "9", "o", "l", "k", "j", "u", ],
-    "o": ["8", "9", "0", "p", ";", "l", "k", "i", ],
-    "p": ["9", "0", "-", "[", "'", ";", "l", "o", ],
-    "a": ["q", "w", "s", "x", "z", ],
-    "s": ["q", "w", "e", "d", "c", "x", "z", "a", ],
-    "d": ["w", "e", "r", "f", "v", "c", "x", "s", ],
-    "f": ["e", "r", "t", "g", "b", "v", "c", "d", ],
-    "g": ["r", "t", "y", "h", "n", "b", "v", "f", ],
-    "h": ["t", "y", "u", "j", "m", "n", "b", "g", ],
-    "j": ["y", "u", "i", "k", ",", "m", "n", "h", ],
-    "k": ["u", "i", "o", "l", ".", ",", "m", "j", ],
-    "l": ["i", "o", "p", ";", "/", ".", ",", "k", ],
-    "z": ["a", "s", "x", ],
-    "x": ["z", "a", "s", "d", "c", ],
-    "c": ["x", "s", "d", "f", "v", ],
-    "v": ["c", "d", "f", "g", "b", ],
-    "b": ["v", "f", "g", "h", "n", ],
-    "n": ["b", "g", "h", "j", "m", ],
-    "m": ["n", "h", "j", "k", ","],
+    "q": "12wsa",
+    "w": "123edsaq",
+    "e": "234rfdsw",
+    "r": "345tgfde",
+    "t": "456yhgfr",
+    "y": "567ujhgt",
+    "u": "678ikjhy",
+    "i": "789olkju",
+    "o": "890p;lki",
+    "p": "90-';lo",
+    "a": "qwsxz",
+    "s": "qwedcxza",
+    "d": "werfvcxs",
+    "f": "ertgbvcd",
+    "g": "rtyhnbvf",
+    "h": "tyujmnbg",
+    "j": "yuikmnh,",
+    "k": "uiol.mj,",
+    "l": "iop;/.k,",
+    "z": "asx",
+    "x": "zasdc",
+    "c": "xsdfv",
+    "v": "cdfgb",
+    "b": "vfghn",
+    "n": "bghjm",
+    "m": "nhjk,",
 }
 
 function randomElementFromArray(xs) {
@@ -39,7 +39,7 @@ function randomElementFromArray(xs) {
 // drunkednessPercentage = [0.00;1.00]
 function remap(useDigits, usePunct, symbol) {
     return randomElementFromArray(
-        keyNeighbours[symbol].filter(s =>
+        keyNeighbours[symbol].split('').filter(s =>
             (useDigits || !s.match(/[0-9]/)) && (usePunct || !s.match(/[^a-z]/))
         ))
 }
