@@ -1,5 +1,8 @@
 // vim: ts=4 sw=4
 
+const $qs = document.querySelector.bind(document)
+const $qsAll = document.querySelectorAll.bind(document)
+
 var keyNeighbours = {
     "q": ["1", "2", "w", "s", "a", ],
     "w": ["1", "2", "3", "e", "d", "s", "a", "q", ],
@@ -53,22 +56,22 @@ function typoText(drunkPercent, useDigits, usePunct, text) {
 }
 
 function render() {
-    var input = document.getElementById("inputText")
-    var output = document.getElementById("outputText")
-    var drunkednessPercentage = parseInt(document.getElementById("drunkednessPercentage").value) / 100
-    var useDigits = document.getElementById("useDigits").checked
-    var usePunct = document.getElementById("usePunct").checked
+    var input = $qs("#inputText")
+    var output = $qs("#outputText")
+    var drunkednessPercentage = parseInt($qs("#drunkednessPercentage").value) / 100
+    var useDigits = $qs("#useDigits").checked
+    var usePunct = $qs("#usePunct").checked
 
     output.textContent = typoText(drunkednessPercentage, useDigits, usePunct, input.value)
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('input, textarea, button').forEach(function (node) {
+    $qsAll('input, textarea, button').forEach(function (node) {
         node.addEventListener('change', render)
         node.addEventListener('keyup', render)
     })
 
-    document.querySelectorAll('input[type=range]').forEach(function (node) {
+    $qsAll('input[type=range]').forEach(function (node) {
         var state = 'up'
 
         node.addEventListener('mousedown', function () { state = 'down' })
@@ -79,10 +82,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
     })
+
+    render()
 })
 
 const setSlider = value => {
-    const slider = document.getElementById("drunkednessPercentage")
+    const slider = $qs("#drunkednessPercentage")
     slider.value = value
     slider.dispatchEvent(new Event('change'))
 }
