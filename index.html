@@ -11,9 +11,12 @@
         <textarea id="inputText"></textarea>
         <p>How drunk do you want to sound (from not drunk at all to completely drunk)</p>
         <input type="range" min="0" max="100" value="50" class="slider" id="drunkednessPercentage">
+        <br>
+        <button onclick="setDrunkednessPercentage(10)">Slight bad</button>
+        <button onclick="setDrunkednessPercentage(40)">Bad</button>
+        <button onclick="setDrunkednessPercentage(70)">Much bad</button>
         <p>Output:</p>
         <p id="outputText"></p>
-        <button id="go">Go</button>
         <script src="./index.js"></script>
     </body>
 </html>

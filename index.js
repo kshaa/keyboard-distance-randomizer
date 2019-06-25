@@ -79,3 +79,8 @@ document.addEventListener("DOMContentLoaded", function(){
         });
     };
 });    
+
+function setDrunkednessPercentage(percentage) {
+    document.getElementById("drunkednessPercentage").value = percentage;
+    render();
+}
