@@ -25,79 +25,79 @@ var keyNeighbours = {
     "b": ["v", "f", "g", "h", "n", ],
     "n": ["b", "g", "h", "j", "m", ],
     "m": ["n", "h", "j", "k", ","],
-};
+}
 
 function randomElementFromArray(xs) {
-    return xs[Math.floor(Math.random() * xs.length)];
+    return xs[Math.floor(Math.random() * xs.length)]
 }
 
 function isLetter(letter) {
     // Probably doesn't work for cyrillic and latvian
-    return letter.length === 1 && letter.match(/[a-z]/i);
+    return letter.length === 1 && letter.match(/[a-z]/i)
 }
 
 function isNormalInteger(str) {
-    return /^\+?\d+$/.test(str);
+    return /^\+?\d+$/.test(str)
 }
 
 // drunkednessPercentage = [0.00;1.00]
 function typoSymbol(drunkednessPercentage, digitsInTypos, symbol) {
     if (isLetter(symbol) && Math.round(Math.random() + (drunkednessPercentage - 0.5)) >= 1) {
-        var availableTypos = keyNeighbours[symbol];
+        var availableTypos = keyNeighbours[symbol]
 
         if (digitsInTypos !== true) {
             for (var availableTypoKey in availableTypos) {
                 if (isNormalInteger(availableTypos[availableTypoKey])) {
-                    availableTypos.splice(availableTypoKey, 1);
+                    availableTypos.splice(availableTypoKey, 1)
                 }
-            }    
+            }
         }
 
-        return randomElementFromArray(availableTypos);
+        return randomElementFromArray(availableTypos)
     }
-    
-    return symbol;
+
+    return symbol
 }
 
 function typoText(drunkednessPercentage, digitsInTypos, text) {
     return text.split("").map(function(symbol) {
         return typoSymbol(drunkednessPercentage, digitsInTypos, symbol)
-    }).join("");
+    }).join("")
 }
 
 function render() {
-    var input = document.getElementById("inputText");
-    var output = document.getElementById("outputText");
-    var drunkednessPercentage = parseInt(document.getElementById("drunkednessPercentage").value) / 100;
-    var digitsInTypos = document.getElementById("digitsInTypos").checked;
+    var input = document.getElementById("inputText")
+    var output = document.getElementById("outputText")
+    var drunkednessPercentage = parseInt(document.getElementById("drunkednessPercentage").value) / 100
+    var digitsInTypos = document.getElementById("digitsInTypos").checked
 
-    output.textContent = typoText(drunkednessPercentage, digitsInTypos, input.value.toLowerCase());
+    output.textContent = typoText(drunkednessPercentage, digitsInTypos, input.value.toLowerCase())
 }
 
 document.addEventListener("DOMContentLoaded", function(){
-    var inputs = document.getElementsByTagName("input");
+    var inputs = document.getElementsByTagName("input")
     for (node of inputs) {
         node.addEventListener('change', function() {
-            render();
-        });
-    };
+            render()
+        })
+    }
 
-    var textareas = document.getElementsByTagName("textarea");
+    var textareas = document.getElementsByTagName("textarea")
     for (node of textareas) {
         node.addEventListener('input', function() {
-            render();
-        });
-    };
+            render()
+        })
+    }
 
-    var buttons = document.getElementsByTagName("button");
+    var buttons = document.getElementsByTagName("button")
     for (node of buttons) {
         node.addEventListener('click', function() {
-            render();
-        });
-    };
-});    
+            render()
+        })
+    }
+})
 
 function setDrunkednessPercentage(percentage) {
-    document.getElementById("drunkednessPercentage").value = percentage;
-    render();
+    document.getElementById("drunkednessPercentage").value = percentage
+    render()
 }
