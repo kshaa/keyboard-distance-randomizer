@@ -3,7 +3,7 @@
 const $qs = document.querySelector.bind(document)
 const $qsAll = document.querySelectorAll.bind(document)
 
-var keyNeighbours = {
+var keyNeighboursDistant = {
     "q": "12wsa",
     "w": "123edsaq",
     "e": "234rfdsw",
@@ -32,6 +32,36 @@ var keyNeighbours = {
     "m": "nhjk,",
 }
 
+// on a mbp keyboard
+var keyNeighboursClose = {
+    "q": "1wa",
+    "w": "23esq",
+    "e": "34wrd",
+    "r": "45tfe",
+    "t": "56ygr",
+    "y": "67uht",
+    "u": "78ijy",
+    "i": "89oku",
+    "o": "90pli",
+    "p": "0-[;o",
+    "a": "qsz",
+    "s": "awdxz",
+    "d": "esxcf",
+    "f": "rdcvg",
+    "g": "tfvbh",
+    "h": "ygbnj",
+    "j": "uhnmk",
+    "k": "ijm,l",
+    "l": "ok,.;",
+    "z": "`xas",
+    "x": "zsdc",
+    "c": "xdfv",
+    "v": "cfgb",
+    "b": "vghn",
+    "n": "bhjm",
+    "m": "njk,",
+}
+
 function randomElementFromArray(xs) {
     return xs[Math.floor(Math.random() * xs.length)]
 }
@@ -39,7 +69,7 @@ function randomElementFromArray(xs) {
 // drunkednessPercentage = [0.00;1.00]
 function remap(useDigits, usePunct, symbol) {
     return randomElementFromArray(
-        keyNeighbours[symbol].split('').filter(s =>
+        keyNeighboursClose[symbol].split('').filter(s =>
             (useDigits || !s.match(/[0-9]/)) && (usePunct || !s.match(/[^a-z]/))
         ))
 }
