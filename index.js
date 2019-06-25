@@ -44,8 +44,8 @@ function isNormalInteger(str) {
 function typoSymbol(drunkednessPercentage, digitsInTypos, symbol) {
     if (isLetter(symbol) && Math.round(Math.random() + (drunkednessPercentage - 0.5)) >= 1) {
         var availableTypos = keyNeighbours[symbol];
-        
-        if (!digitsInTypos) {
+
+        if (digitsInTypos !== true) {
             for (var availableTypoKey in availableTypos) {
                 if (isNormalInteger(availableTypos[availableTypoKey])) {
                     availableTypos.splice(availableTypoKey, 1);
@@ -60,7 +60,9 @@ function typoSymbol(drunkednessPercentage, digitsInTypos, symbol) {
 }
 
 function typoText(drunkednessPercentage, digitsInTypos, text) {
-    return text.split("").map(typoSymbol.bind(null, drunkednessPercentage, digitsInTypos)).join("");
+    return text.split("").map(function(symbol) {
+        return typoSymbol(drunkednessPercentage, digitsInTypos, symbol)
+    }).join("");
 }
 
 function render() {
