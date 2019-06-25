@@ -43,7 +43,8 @@ function remap(digitsInTypos, symbol) {
 function typoText(drunkPercent, digitsInTypos, text) {
     return text.split("").map(function(symbol) {
         if (symbol.match(/[a-z]/i) && Math.random() < drunkPercent) {
-            return remap(digitsInTypos, symbol)
+            mapped = remap(digitsInTypos, symbol.toLowerCase())
+            return symbol == symbol.toLowerCase() ? mapped : mapped.toUpperCase()
         } else {
             return symbol
         }
@@ -56,7 +57,7 @@ function render() {
     var drunkednessPercentage = parseInt(document.getElementById("drunkednessPercentage").value) / 100
     var digitsInTypos = document.getElementById("digitsInTypos").checked
 
-    output.textContent = typoText(drunkednessPercentage, digitsInTypos, input.value.toLowerCase())
+    output.textContent = typoText(drunkednessPercentage, digitsInTypos, input.value)
 }
 
 document.addEventListener('DOMContentLoaded', function() {
