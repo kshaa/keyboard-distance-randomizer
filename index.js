@@ -77,12 +77,12 @@ function render() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('input:not([type=range]), textarea, button').forEach(function (node) {
+    document.querySelectorAll('input, textarea, button').forEach(function (node) {
         node.addEventListener('change', render)
         node.addEventListener('keyup', render)
     })
 
-    document.querySelectorAll('input[type=range], textarea, button').forEach(function (node) {
+    document.querySelectorAll('input[type=range]').forEach(function (node) {
         var state = 'up'
 
         node.addEventListener('mousedown', function () { state = 'down' })
@@ -95,7 +95,8 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 })
 
-function setDrunkednessPercentage(percentage) {
-    document.getElementById("drunkednessPercentage").value = percentage
-    render()
+const setSlider = value => {
+    const slider = document.getElementById("drunkednessPercentage")
+    slider.value = value
+    slider.dispatchEvent(new Event('change'))
 }
