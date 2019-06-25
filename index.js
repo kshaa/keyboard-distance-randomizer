@@ -70,7 +70,9 @@ function randomElementFromArray(xs) {
 function remap(useDigits, usePunct, symbol) {
     return randomElementFromArray(
         keyNeighboursClose[symbol].split('').filter(s =>
-            (useDigits || !s.match(/[0-9]/)) && (usePunct || !s.match(/[^a-z]/))
+            (useDigits && s.match(/[0-9]/)) ||
+            (usePunct && !s.match(/[a-z]/) && !s.match(/[0-9]/)) ||
+            s.match(/[a-z]/)
         ))
 }
 
