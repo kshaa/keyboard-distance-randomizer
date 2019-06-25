@@ -58,8 +58,24 @@ function render() {
 }
 
 document.addEventListener("DOMContentLoaded", function(){
-    var button = document.getElementById("go");
-    button.addEventListener('click', function() {
-        render();
-    });
+    var inputs = document.getElementsByTagName("input");
+    for (node of inputs) {
+        node.addEventListener('change', function() {
+            render();
+        });
+    };
+
+    var textareas = document.getElementsByTagName("textarea");
+    for (node of textareas) {
+        node.addEventListener('input', function() {
+            render();
+        });
+    };
+
+    var buttons = document.getElementsByTagName("button");
+    for (node of buttons) {
+        node.addEventListener('click', function() {
+            render();
+        });
+    };
 });    
