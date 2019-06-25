@@ -75,14 +75,23 @@ function remap(useDigits, usePunct, symbol) {
 }
 
 function typoText(drunkPercent, useDigits, usePunct, text) {
-    return text.split("").map(function(symbol) {
-        if (symbol.match(/[a-z]/i) && Math.random() < drunkPercent) {
-            mapped = remap(useDigits, usePunct, symbol.toLowerCase())
-            return symbol == symbol.toLowerCase() ? mapped : mapped.toUpperCase()
-        } else {
-            return symbol
-        }
-    }).join("")
+    return text.split(' ').map(word => {
+        var count = 0
+
+        return word.split('').map(function(symbol) {
+            if (
+                count + Math.random() * 1.5 - 0.75 < Math.ceil(word.length / 6) &&
+                symbol.match(/[a-z]/i) &&
+                Math.random() < drunkPercent
+            ) {
+                count += 1
+                mapped = remap(useDigits, usePunct, symbol.toLowerCase())
+                return symbol == symbol.toLowerCase() ? mapped : mapped.toUpperCase()
+            } else {
+                return symbol
+            }
+        }).join('')
+    }).join(' ')
 }
 
 function render() {
