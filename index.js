@@ -33,15 +33,6 @@ function randomElementFromArray(xs) {
     return xs[Math.floor(Math.random() * xs.length)]
 }
 
-function isLetter(letter) {
-    // Probably doesn't work for cyrillic and latvian
-    return letter.length === 1 && letter.match(/[a-z]/i)
-}
-
-function isNormalInteger(str) {
-    return /^\+?\d+$/.test(str)
-}
-
 // drunkednessPercentage = [0.00;1.00]
 function remap(digitsInTypos, symbol) {
     return randomElementFromArray(
