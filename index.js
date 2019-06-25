@@ -1,3 +1,5 @@
+// vim: ts=4 sw=4
+
 var keyNeighbours = {
     "q": ["1", "2", "w", "s", "a", ],
     "w": ["1", "2", "3", "e", "d", "s", "a", "q", ],
@@ -74,27 +76,23 @@ function render() {
     output.textContent = typoText(drunkednessPercentage, digitsInTypos, input.value.toLowerCase())
 }
 
-document.addEventListener("DOMContentLoaded", function(){
-    var inputs = document.getElementsByTagName("input")
-    for (node of inputs) {
-        node.addEventListener('change', function() {
-            render()
-        })
-    }
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('input:not([type=range]), textarea, button').forEach(function (node) {
+        node.addEventListener('change', render)
+        node.addEventListener('keyup', render)
+    })
 
-    var textareas = document.getElementsByTagName("textarea")
-    for (node of textareas) {
-        node.addEventListener('input', function() {
-            render()
-        })
-    }
+    document.querySelectorAll('input[type=range], textarea, button').forEach(function (node) {
+        var state = 'up'
 
-    var buttons = document.getElementsByTagName("button")
-    for (node of buttons) {
-        node.addEventListener('click', function() {
-            render()
+        node.addEventListener('mousedown', function () { state = 'down' })
+        node.addEventListener('mouseup', function () { state = 'up' })
+        node.addEventListener('mousemove', function () {
+            if (state == 'down') {
+                render()
+            }
         })
-    }
+    })
 })
 
 function setDrunkednessPercentage(percentage) {
