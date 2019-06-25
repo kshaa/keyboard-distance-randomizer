@@ -4,6 +4,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
             @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+            @import url('https://fonts.googleapis.com/css?family=Fira+Mono|Roboto&display=swap');
 
             body {
                 padding: 3em;
@@ -32,24 +33,50 @@
 
             #settings .range input {
                 display: inline-block;
-                margin: 0 10px;
+                width: 100%;
             }
 
-            #settings div {
-                margin: 5px 0;
+            #settings .presets {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            #settings .presets button {
+                width: 24%;
+            }
+
+            .setting {
+                margin: 0 0 15px;
             }
 
             .text {
                 border-radius: 10px;
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
                 border: none;
-                height: 5em;
+                min-height: 6em;
                 padding: 8px;
-                font-family: 'Roboto', sans-serif;
+                /* Monospaced, because the random character changes are twitchy */
+                font-family: 'Fira Mono', monospace;
                 font-size: 14px;
                 /* Horizontal scaling looks bad */
                 max-width: 100%;
                 min-width: 100%;
+                box-sizing: border-box;
+            }
+
+            @media only screen and (max-width: 768px) {
+                body {
+                    width: inherit;
+                    padding: 1.5em;
+                }
+
+                #settings {
+                    width: inherit;
+                }
+
+                .text {
+                    min-height: 12em;
+                }
             }
         </style>
     </head>
@@ -59,24 +86,34 @@
         <textarea id="inputText" class="text">In 1974 Egyptologists visiting his tomb noticed that the mummy's condition was rapidly deteriorating and flew it to Paris for examination.[71] Ramesses II was issued an Egyptian passport that listed his occupation as "King (deceased)"</textarea>
 
         <div id="settings">
-            <div class="range">
-                Set randomizer strength
-                <input type="range" min="0" max="100" value="50" class="slider" id="drunkednessPercentage">
+            <div class="setting drunkedness">
+                <label>Randomizer strength</label>
+                <control>
+                    <div class="range">
+                        <input type="range" min="0" max="100" value="50" class="slider" id="drunkednessPercentage">
+                    </div>
+                    <div class="presets">
+                        <button onclick="setSlider(0)">Sober</button>
+                        <button onclick="setSlider(10)">Tipsy</button>
+                        <button onclick="setSlider(20)">Full drunk</button>
+                        <button onclick="setSlider(40)">Illegible</button>
+                    </div>                
+                </control>
             </div>
-
-            <div>
-                <button onclick="setSlider(0)">Sober</button>
-                <button onclick="setSlider(10)">Tipsy</button>
-                <button onclick="setSlider(20)">Full drunk</button>
-                <button onclick="setSlider(40)">Illegible</button>
+            <div class="setting digits">
+                <label>Use digits?</label>
+                <control>
+                    <input type="checkbox" id="useDigits">
+                </control>
             </div>
-
-            <p>Use digits? <input type="checkbox" id="useDigits"></p>
-            <p>Use punctation? <input type="checkbox" id="usePunct"></p>
+            <div class="setting punct">
+                <label>Use punctation?</label>
+                <control>
+                    <input type="checkbox" id="usePunct">
+                </control>
+            </div>
         </div>
-
         <p id="outputText" class="text"></p>
-
         <script src="./index.js"></script>
     </body>
 </html>
