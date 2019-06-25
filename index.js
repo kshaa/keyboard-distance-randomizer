@@ -34,16 +34,17 @@ function randomElementFromArray(xs) {
 }
 
 // drunkednessPercentage = [0.00;1.00]
-function remap(digitsInTypos, symbol) {
+function remap(useDigits, usePunct, symbol) {
     return randomElementFromArray(
         keyNeighbours[symbol].filter(s =>
-            digitsInTypos || !s.match(/[0-9]/)))
+            (useDigits || !s.match(/[0-9]/)) && (usePunct || !s.match(/[^a-z]/))
+        ))
 }
 
-function typoText(drunkPercent, digitsInTypos, text) {
+function typoText(drunkPercent, useDigits, usePunct, text) {
     return text.split("").map(function(symbol) {
         if (symbol.match(/[a-z]/i) && Math.random() < drunkPercent) {
-            mapped = remap(digitsInTypos, symbol.toLowerCase())
+            mapped = remap(useDigits, usePunct, symbol.toLowerCase())
             return symbol == symbol.toLowerCase() ? mapped : mapped.toUpperCase()
         } else {
             return symbol
@@ -55,9 +56,10 @@ function render() {
     var input = document.getElementById("inputText")
     var output = document.getElementById("outputText")
     var drunkednessPercentage = parseInt(document.getElementById("drunkednessPercentage").value) / 100
-    var digitsInTypos = document.getElementById("digitsInTypos").checked
+    var useDigits = document.getElementById("useDigits").checked
+    var usePunct = document.getElementById("usePunct").checked
 
-    output.textContent = typoText(drunkednessPercentage, digitsInTypos, input.value)
+    output.textContent = typoText(drunkednessPercentage, useDigits, usePunct, input.value)
 }
 
 document.addEventListener('DOMContentLoaded', function() {
