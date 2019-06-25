@@ -2,23 +2,73 @@
     <head>
         <title>Keyboard Distance Randomizer</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body {
+                padding: 3em;
+                width: 40em;
+                margin: auto;
+            }
+
+            h3 {
+                text-align: center;
+                margin-bottom: 2em;
+            }
+
+            textarea { width: 100%; }
+
+            #settings {
+                margin: 2em auto;
+                width: 50%;
+            }
+
+            #settings .center {
+                display: flex;
+                justify-content: center;
+            }
+
+            #settings .range input {
+                display: inline-block;
+                margin: 0 10px;
+            }
+
+            #settings div {
+                margin: 5px 0;
+            }
+
+            .text {
+                border-radius: 10px;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                border: none;
+                height: 5em;
+                padding: 8px;
+                font-family: Times;
+                font-size: 14px;
+            }
+        </style>
     </head>
     <body>
-        <h3>Keyboard Distance Randomizer</h3>
-        <p>Insert text that needs to typos introduced</p>
-        <br>
-        <textarea id="inputText"></textarea>
-        <p>How drunk do you want to sound (from not drunk at all to completely drunk)</p>
-        <input type="range" min="0" max="100" value="50" class="slider" id="drunkednessPercentage">
-        <br>
-        <button onclick="setSlider(0)">Sober</button>
-        <button onclick="setSlider(10)">Tipsy</button>
-        <button onclick="setSlider(20)">Full drunk</button>
-        <button onclick="setSlider(40)">Illegible</button>
-        <br>
-        <p>Should digits be allowed in typos? <input type="checkbox" id="digitsInTypos"></p>
-        <p>Output:</p>
-        <p id="outputText"></p>
+        <h3>Auto-incorrect text</h3>
+
+        <textarea id="inputText" class="text"></textarea>
+
+        <div id="settings">
+            <div class="range">
+                Set randomizer strength
+                <input type="range" min="0" max="100" value="50" class="slider" id="drunkednessPercentage">
+            </div>
+
+            <div>
+                <button onclick="setSlider(0)">Sober</button>
+                <button onclick="setSlider(10)">Tipsy</button>
+                <button onclick="setSlider(20)">Full drunk</button>
+                <button onclick="setSlider(40)">Illegible</button>
+            </div>
+
+            <p>Use digits? <input type="checkbox" id="digitsInTypos"></p>
+        </div>
+
+        <p id="outputText" class="text"></p>
+
         <script src="./index.js"></script>
     </body>
 </html>
